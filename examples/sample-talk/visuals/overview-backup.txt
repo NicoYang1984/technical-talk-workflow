@@ -1,0 +1,8 @@
+Tasks: T1(2s) T2(2s) T3(2s) T4(20s)  [illustrative]
+          \      |      /    |
+            shared queue
+          W1    W2    W3
+                 |
+           batch barrier
+                 |
+       finish only when all done

@@ -1,0 +1,15 @@
+{
+  "visuals": [
+    {
+      "id": "overview",
+      "kind": "mermaid",
+      "source_path": "visuals/overview.mmd",
+      "fallback_path": "visuals/overview.txt",
+      "purpose": "Navigate the entire talk and recover after interruptions",
+      "question": "Where is our tracked object now?",
+      "cue": "Point to one node, ask what happens next",
+      "source_status": "original-illustration",
+      "rendered_ok": false
+    }
+  ]
+}

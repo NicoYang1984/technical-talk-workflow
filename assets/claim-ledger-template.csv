@@ -1,0 +1,3 @@
+section_id,claim,source_or_method,status,assumptions,public_safe,verification_next
+P02,"A numerical example gives output X","manual calculation",illustrative,"fixed input and parameters",yes,"recalculate with Python"
+P04,"Implementation reduces latency by Y%","none yet",hypothesis,"hardware/input unspecified",no,"measure on representative workload"

@@ -1,0 +1,22 @@
+name: Validate technical-talk-workflow
+on:
+  push:
+  pull_request:
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - name: Unit tests
+        run: python -m unittest discover -s scripts -p 'test_*.py' -v
+      - name: Example structural alignment
+        run: |
+          python scripts/check_alignment.py --outline examples/sample-talk/outline.json --projection examples/sample-talk/projection.md --notes examples/sample-talk/speaker_notes.md
+      - name: Example content and media audit
+        run: |
+          python scripts/audit_talk.py --outline examples/sample-talk/outline.json --projection examples/sample-talk/projection.md --notes examples/sample-talk/speaker_notes.md --visuals examples/sample-talk/visuals.json --strict-warnings
+      - name: Check for accidentally committed secrets
+        run: python scripts/privacy_scan.py .

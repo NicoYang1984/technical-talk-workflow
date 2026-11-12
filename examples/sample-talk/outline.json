@@ -1,0 +1,31 @@
+{
+  "title": "Why task queues have long-tail latency",
+  "version": "v1",
+  "duration_minutes": 12,
+  "talk_minutes": 10,
+  "discussion_minutes": 2,
+  "core_question": "Why can one slow task delay the entire batch?",
+  "tracked_object": "One task in a batch",
+  "sections": [
+    {
+      "id": "P00", "title": "Question｜A batch of tasks is slow", "kind": "talk", "minutes": 2,
+      "example_id": "queue-v1", "visual_id": "overview", "tier": "core",
+      "anchors": {"projection": ["long-tail"], "notes": ["long-tail"]}
+    },
+    {
+      "id": "P01", "title": "Mechanism｜The task queue and barrier", "kind": "talk", "minutes": 4,
+      "example_id": "queue-v1", "visual_id": "overview", "tier": "core",
+      "anchors": {"projection": ["barrier"], "notes": ["barrier"]}
+    },
+    {
+      "id": "P02", "title": "Diagnosis｜Measure before optimizing", "kind": "talk", "minutes": 4,
+      "example_id": "queue-v1", "visual_id": "overview", "tier": "compressible",
+      "anchors": {"projection": ["95th percentile"], "notes": ["95th percentile"]}
+    },
+    {
+      "id": "P03", "title": "Discussion｜Where would you intervene?", "kind": "discussion", "minutes": 2,
+      "example_id": "queue-v1", "visual_id": "overview", "tier": "core",
+      "anchors": {"both": ["shared queue"]}
+    }
+  ]
+}

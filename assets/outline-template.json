@@ -1,0 +1,47 @@
+{
+  "title": "[Title / 技术主题]",
+  "version": "v1",
+  "duration_minutes": 60,
+  "talk_minutes": 50,
+  "discussion_minutes": 10,
+  "core_question": "[One question that the whole talk answers]",
+  "tracked_object": "[One object throughout the talk]",
+  "sections": [
+    {
+      "id": "P00", "title": "问题｜从熟悉的现象出发", "kind": "talk", "minutes": 3,
+      "core_question": "What is missing?", "takeaway": "[One takeaway]", "example_id": "intro-v1",
+      "visual_id": "overview", "tier": "core", "transition": "What do we need first?", "exit_line": "[30-second exit]",
+      "anchors": {"projection": [], "notes": []}
+    },
+    {
+      "id": "P01", "title": "直觉｜沿一个最小案例走一步", "kind": "talk", "minutes": 8,
+      "core_question": "What are the essential moving parts?", "takeaway": "[One takeaway]", "example_id": "toy-v1",
+      "visual_id": "toy", "tier": "core", "transition": "Why isn't this enough?", "exit_line": "[30-second exit]",
+      "anchors": {"projection": [], "notes": []}
+    },
+    {
+      "id": "P02", "title": "机制｜从直觉到关键推导", "kind": "talk", "minutes": 12,
+      "core_question": "Why does the mechanism work?", "takeaway": "[One takeaway]", "example_id": "toy-v1",
+      "visual_id": "derivation", "tier": "core", "transition": "How would we actually apply it?", "exit_line": "[Short proof summary]",
+      "deep_dive": true, "anchors": {"projection": [], "notes": []}
+    },
+    {
+      "id": "P03", "title": "应用｜一条完整的实际处理链", "kind": "talk", "minutes": 14,
+      "core_question": "Where is the mechanism used?", "takeaway": "[One takeaway]", "example_id": "engineering-v1",
+      "visual_id": "system", "tier": "core", "transition": "What could fail?", "exit_line": "[Complete pipeline in one sentence]",
+      "anchors": {"projection": [], "notes": []}
+    },
+    {
+      "id": "P04", "title": "边界｜真实工程与验证", "kind": "talk", "minutes": 13,
+      "core_question": "What trade-offs and failures remain?", "takeaway": "[One takeaway]", "example_id": "engineering-v1",
+      "visual_id": "failure", "tier": "compressible", "transition": "Can we reconstruct the story?", "exit_line": "[Brief engineering recap]",
+      "anchors": {"projection": [], "notes": []}
+    },
+    {
+      "id": "P05", "title": "回顾与讨论｜沿全景图复盘", "kind": "discussion", "minutes": 10,
+      "core_question": "Can the audience reconstruct the whole chain?", "takeaway": "[Two key questions]", "example_id": "engineering-v1",
+      "visual_id": "overview", "tier": "core", "transition": "What should be tested next?", "exit_line": "[One-minute final takeaway]",
+      "anchors": {"projection": [], "notes": []}
+    }
+  ]
+}

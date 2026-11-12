@@ -1,0 +1,13 @@
+{
+  "visuals": [{
+    "id": "overview",
+    "kind": "ascii",
+    "source_path": "visuals/overview.txt",
+    "fallback_path": "visuals/overview-backup.txt",
+    "purpose": "Show that a barrier waits for the last unfinished task",
+    "question": "Which task controls the batch finish time?",
+    "cue": "Point from the slow task to the barrier",
+    "source_status": "original illustrative example",
+    "rendered_ok": true
+  }]
+}
