@@ -5,7 +5,9 @@
   "talk_minutes": 50,
   "discussion_minutes": 10,
   "core_question": "[One question that the whole talk answers]",
-  "tracked_object": "[One object throughout the talk]",
+  "tracked_object": "[One concrete output or request throughout the talk]",
+  "audience_assumptions": "[Known prerequisites and unknown prerequisites; mark ASSUMED when defaulted]",
+  "example_invariants": ["[Same source data, units, and output semantics across comparisons]"],
   "sections": [
     {
       "id": "P00", "title": "问题｜从熟悉的现象出发", "kind": "talk", "minutes": 3,
@@ -16,12 +18,14 @@
     {
       "id": "P01", "title": "直觉｜沿一个最小案例走一步", "kind": "talk", "minutes": 8,
       "core_question": "What are the essential moving parts?", "takeaway": "[One takeaway]", "example_id": "toy-v1",
+      "prediction": "[What should the audience guess?]", "new_complexity": "[Only one new obstacle]",
       "visual_id": "toy", "tier": "core", "transition": "Why isn't this enough?", "exit_line": "[30-second exit]",
       "anchors": {"projection": [], "notes": []}
     },
     {
       "id": "P02", "title": "机制｜从直觉到关键推导", "kind": "talk", "minutes": 12,
       "core_question": "Why does the mechanism work?", "takeaway": "[One takeaway]", "example_id": "toy-v1",
+      "controlled_comparison": "[Baseline and new strategy under same input/metric]",
       "visual_id": "derivation", "tier": "core", "transition": "How would we actually apply it?", "exit_line": "[Short proof summary]",
       "deep_dive": true, "anchors": {"projection": [], "notes": []}
     },

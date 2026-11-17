@@ -1,0 +1,18 @@
+{
+  "topic": "B+ 树为什么适合数据库范围查询？",
+  "mode": "test",
+  "audience": {
+    "role": "backend engineers",
+    "knows": ["Python list", "binary search", "basic SQL"],
+    "new_to": ["database page and B+ tree indexes"]
+  },
+  "duration_minutes": 30,
+  "discussion_minutes": 5,
+  "learning_outcome": "Trace one range query from root to linked leaves and compare it to a full scan under the same data",
+  "delivery_platform": "Feishu Docs",
+  "depth": "intro-to-engineering",
+  "sources": [],
+  "demo_available": false,
+  "offline_required": true,
+  "privacy": "public"
+}

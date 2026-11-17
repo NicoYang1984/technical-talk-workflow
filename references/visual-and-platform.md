@@ -1,5 +1,11 @@
 # Visual & Platform｜图示负责解释而不是装饰
 
+## 演示契约与来源等级
+
+每个交互演示先设计 **问题、同一输入、单变量改变、听众预测、逐帧揭晓、机制解释、失效边界、静态备份**；模板在 [demo-storyboard-template.json](../assets/demo-storyboard-template.json)，完整方法见 [机制漫游](mechanism-walkthrough.md)。
+
+要分开四类证据：教学模拟（illustrative）、公式算出的结论（derived）、可查来源（source-backed）、实测（measured）。网页动画的“快慢”或调度顺序通常只是逻辑可视化，不是 GPU、网络或数据库的性能指标。
+
 ## 图的角色
 
 - **Navigation**：先提供全景，反复高亮当前步骤，结束时回到全景。

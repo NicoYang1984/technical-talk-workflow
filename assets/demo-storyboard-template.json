@@ -1,0 +1,19 @@
+{
+  "demo_id": "demo-core-mechanism",
+  "section_id": "P02",
+  "question": "What changes when we alter exactly one input condition?",
+  "input_state": {"toy_input": "A small, reproducible example", "invariants": ["same data", "same metric"]},
+  "change_one_thing": "one named variable, operation or strategy",
+  "predict": "Ask audience for a predicted output before the reveal",
+  "steps": [
+    {"step": 1, "highlight": "input", "narration": "Identify a concrete starting state", "expected_state": "..."},
+    {"step": 2, "highlight": "transformation", "narration": "Apply one rule", "expected_state": "..."},
+    {"step": 3, "highlight": "output", "narration": "Compare output against prediction", "expected_state": "..."}
+  ],
+  "reveal": "A checkable value or observable state",
+  "mechanism": "Exact causal explanation; include formula or pseudocode when needed",
+  "boundary": "What this tiny simulation does not establish",
+  "fallback": "visuals/demo-core-mechanism.png",
+  "evidence_level": "illustrative",
+  "verified": false
+}

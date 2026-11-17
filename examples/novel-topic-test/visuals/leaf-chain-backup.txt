@@ -1,0 +1,6 @@
+Toy B+ Tree (not a page layout or performance trace)
+                  [20 | 35] (root separators, illustrative)
+                 /    |    \
+[5, 10, 15] --> [20, 25, 30] --> [35, 40]
+  START 15     continue           take 35, stop before 40
+Range query [15, 35] inclusive -> [15, 20, 25, 30, 35]

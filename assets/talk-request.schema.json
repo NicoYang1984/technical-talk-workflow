@@ -1,0 +1,32 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Technical Talk Workflow Request",
+  "description": "Only topic is required. Other fields refine pedagogy; omitted audience/duration must be explicitly marked assumed.",
+  "type": "object",
+  "required": ["topic"],
+  "properties": {
+    "topic": {"type": "string", "minLength": 1},
+    "mode": {"type": "string", "enum": ["outline", "test", "full", "repair"], "default": "full"},
+    "audience": {
+      "type": "object",
+      "properties": {
+        "knows": {"type": "array", "items": {"type": "string"}},
+        "new_to": {"type": "array", "items": {"type": "string"}},
+        "role": {"type": "string"}
+      }
+    },
+    "duration_minutes": {"type": "integer", "minimum": 10, "maximum": 240, "default": 30},
+    "discussion_minutes": {"type": "integer", "minimum": 0, "maximum": 120, "default": 5},
+    "learning_outcome": {"type": "string"},
+    "delivery_platform": {"type": "string", "default": "Markdown"},
+    "language": {"type": "string", "default": "zh-CN"},
+    "depth": {"type": "string", "enum": ["intro", "intro-to-engineering", "deep-dive"], "default": "intro-to-engineering"},
+    "focus": {"type": "array", "items": {"type": "string"}},
+    "excluded_topics": {"type": "array", "items": {"type": "string"}},
+    "sources": {"type": "array", "items": {"type": "string"}},
+    "demo_available": {"type": "boolean", "default": false},
+    "offline_required": {"type": "boolean", "default": true},
+    "privacy": {"type": "string", "enum": ["private", "internal", "public"], "default": "private"}
+  },
+  "additionalProperties": false
+}

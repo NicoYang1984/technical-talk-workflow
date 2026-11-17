@@ -1,0 +1,11 @@
+{
+  "visuals": [{
+    "id": "leaf-chain",
+    "kind": "ascii",
+    "question": "What exactly is visited while scanning [15,35]?",
+    "source_path": "visuals/leaf-chain.txt",
+    "fallback_path": "visuals/leaf-chain-backup.txt",
+    "evidence_level": "illustrative",
+    "rendered_ok": true
+  }]
+}

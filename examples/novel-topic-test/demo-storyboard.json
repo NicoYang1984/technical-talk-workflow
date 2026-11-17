@@ -1,0 +1,24 @@
+{
+  "demo_id": "range-query-walkthrough",
+  "section_id": "P01",
+  "question": "What exact keys does BETWEEN 15 AND 35 return and when does traversal stop?",
+  "input_state": {
+    "keys": [5, 10, 15, 20, 25, 30, 35, 40],
+    "leaves": [[5, 10, 15], [20, 25, 30], [35, 40]],
+    "range": [15, 35],
+    "invariants": ["inclusive lower and upper bounds", "same eight keys"]
+  },
+  "change_one_thing": "Change current traversal position: root → first matching leaf → following leaves",
+  "predict": "Before expanding the leaves, ask learners which values are included and when to stop.",
+  "steps": [
+    {"step": 1, "highlight": "root/first leaf", "narration": "Seek the first key >=15.", "expected_state": "current = 15"},
+    {"step": 2, "highlight": "middle leaf", "narration": "Follow linked leaves while keys <= 35.", "expected_state": "output = [15,20,25,30]"},
+    {"step": 3, "highlight": "last leaf", "narration": "Include 35, stop when 40 is observed.", "expected_state": "output = [15,20,25,30,35]"}
+  ],
+  "reveal": "[15,20,25,30,35]",
+  "mechanism": "The search path locates the lower bound; leaf links allow subsequent in-order iteration until the upper bound is exceeded.",
+  "boundary": "Toy leaves explain correctness, not physical page locality or universal performance speedup.",
+  "fallback": "visuals/leaf-chain.txt",
+  "evidence_level": "illustrative",
+  "verified": true
+}

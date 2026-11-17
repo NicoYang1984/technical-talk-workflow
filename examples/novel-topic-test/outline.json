@@ -1,0 +1,15 @@
+{
+  "title": "为什么 B+ 树适合范围查询？（独立领域冒烟样例）",
+  "version": "smoke-v1",
+  "duration_minutes": 30,
+  "talk_minutes": 25,
+  "discussion_minutes": 5,
+  "core_question": "A database needs all keys from 15 to 35; why isn't binary search in a flat list the whole story?",
+  "tracked_object": "One range query [15, 35]",
+  "sections": [
+    {"id":"P00", "title":"动机｜一次范围查询究竟需要哪些结果？", "kind":"talk", "minutes":5, "visual_id":"leaf-chain", "example_id":"keys-8-v1", "tier":"core", "anchors":{"both":["[15, 35]","5, 10, 15"]}},
+    {"id":"P01", "title":"机制｜先定位左边界，再沿叶子节点往后走", "kind":"talk", "minutes":10, "visual_id":"leaf-chain", "example_id":"keys-8-v1", "tier":"core", "anchors":{"both":["[15, 20, 25, 30, 35]","B+ tree"]}},
+    {"id":"P02", "title":"对照｜相同数据下，叶子遍历和全表扫描有何不同？", "kind":"talk", "minutes":10, "visual_id":"leaf-chain", "example_id":"keys-8-v1", "tier":"compressible", "anchors":{"both":["8 个键","未测量"]}},
+    {"id":"P03", "title":"讨论｜索引什么情况下未必值得使用？", "kind":"discussion", "minutes":5, "visual_id":"leaf-chain", "example_id":"keys-8-v1", "tier":"core", "anchors":{"both":["写入维护代价"]}}
+  ]
+}
