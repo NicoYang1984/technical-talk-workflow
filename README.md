@@ -33,11 +33,6 @@
 
 完整契约见 [Input Contract](references/input-contract.md)；机器可读的 [Request Schema](assets/talk-request.schema.json) 与 [Minimal](assets/talk-request-minimal.json) / [Recommended](assets/talk-request-recommended.json) 示例均已提供。
 
-### 借鉴 LazyAttention：让例子真正“走起来”
-
-公开的 [Attention Kernel Walkthrough](https://lazyagi.github.io/LazyAttention/tutorials/attention-kernel-walkthrough/) 通过**追踪一块输出 O**来组织内容：先补必要 CUDA 前提，再展示 Forward 的依赖、输入的实际布局、两种策略的同条件对照、Backward 的数据流，以及真实工作负载和优化证据。其动画是逻辑演示，而不是硬件实测轨迹。
-
-我们把这个思路抽象为：**一条具体输出 → 简单例子 → 逐步加入一个新难点 → 同输入对照方案 → 真实约束与证据**。每次交互都有“预测 → 点击/计算 → 解释结果 → 说明适用边界”，并给出静态备用图；不照搬 CUDA 细节。参见 [Mechanism Walkthrough](references/mechanism-walkthrough.md)。
 
 ### 这套方法有什么特点？
 
@@ -140,10 +135,6 @@ A complete technical outline is not automatically a coherent talk. Speakers may 
 **Minimal:** the `topic` alone is enough for a provisional **test** (3–4 sections with acceptance criteria). Unless supplied, assume basic software/ML audience and **30 minutes total including 5 minutes of discussion**, and label those as assumptions. Do not silently reuse the duration of a prior talk.
 
 **Recommended:** topic, what the audience already knows and does not know, duration + discussion budget, measurable learning outcome, and delivery platform. Sources, depth, demo/availability, offline access and privacy level are optional. Natural-language input works; JSON is not required. See [Input Contract](references/input-contract.md), [Schema](assets/talk-request.schema.json), and [Test Fixture](examples/novel-topic-test/acceptance.md).
-
-### Teaching method inspired by LazyAttention
-
-The public [Attention Kernel Walkthrough](https://lazyagi.github.io/LazyAttention/tutorials/attention-kernel-walkthrough/) follows one output tile through dependency, grouping, implementations, nonuniform workloads, and evidence. We adapt its **progressive disclosure and controlled comparisons**, not its CUDA-specific content. A useful demo asks learners to **predict**, varies exactly one important condition, **reveals** a step-by-step result, explains the mechanism, and states what has *not* been proven. Each interaction needs a static backup. See [Mechanism Walkthrough](references/mechanism-walkthrough.md).
 
 ### Design principles
 
