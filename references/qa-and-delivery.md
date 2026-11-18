@@ -3,7 +3,7 @@
 ## 双稿一致性检查
 
 - 使用同一 `outline.json`，不要分别独立设计 Projection 和 Notes 的章节；
-- `id/title/order` 逐项一致，`minutes` 合计与总时间一致；
+- 内部 `id` 唯一；两稿显示的自然章节 `title/order` 逐项一致，不显示 ID 或序号；`minutes` 合计与总时间一致；
 - 原理公式、示例设定和数值不矛盾；
 - 图示在对应节点出现，Notes 有操作指导；
 - Notes 的转场指向投屏下一节点；

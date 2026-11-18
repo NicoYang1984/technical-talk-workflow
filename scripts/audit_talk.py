@@ -14,23 +14,21 @@ import re
 import sys
 from pathlib import Path
 
-from check_alignment import HEADING, check as check_alignment
+from check_alignment import headings, check as check_alignment
 
 SPOKEN = re.compile(r"<!--\s*SPOKEN START\s*-->(.*?)<!--\s*SPOKEN END\s*-->", re.DOTALL | re.IGNORECASE)
 CJK = re.compile(r"[\u3400-\u9fff]")
 
 
-def split_sections(path: Path) -> dict[str, str]:
-    sections: dict[str, list[str]] = {}
-    current = None
-    for line in path.read_text(encoding="utf-8-sig").splitlines():
-        match = HEADING.match(line)
-        if match:
-            current = match.group(1)
-            sections[current] = []
-        elif current:
-            sections[current].append(line)
-    return {key: "\n".join(value) for key, value in sections.items()}
+def split_sections(path: Path, expected_sections: list[dict]) -> dict[str, str]:
+    """Map visible natural headings to internal outline IDs by validated order."""
+    lines = path.read_text(encoding="utf-8-sig").splitlines()
+    entries = headings(path)
+    result: dict[str, str] = {}
+    for idx, (_, _title, line_number) in enumerate(entries[:len(expected_sections)]):
+        end = entries[idx + 1][2] - 1 if idx + 1 < len(entries) else len(lines)
+        result[expected_sections[idx]["id"]] = "\n".join(lines[line_number:end])
+    return result
 
 
 def audit(outline: Path, projection: Path, notes: Path, visuals: Path | None = None,
@@ -41,8 +39,8 @@ def audit(outline: Path, projection: Path, notes: Path, visuals: Path | None = N
         return errors, warnings
 
     data = json.loads(outline.read_text(encoding="utf-8-sig"))
-    projected = split_sections(projection)
-    spoken = split_sections(notes)
+    projected = split_sections(projection, data["sections"])
+    spoken = split_sections(notes, data["sections"])
     manifest_by_id: dict[str, dict] = {}
     if visuals:
         media = json.loads(visuals.read_text(encoding="utf-8-sig"))

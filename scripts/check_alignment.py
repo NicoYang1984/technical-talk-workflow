@@ -1,10 +1,9 @@
 #!/usr/bin/env python3
-"""Check that a talk's projection and speaker notes share outline IDs/titles/order.
+"""Validate matching natural section titles/order; IDs stay internal to outline.json.
 
-Usage:
-    python check_alignment.py --outline outline.json --projection projection.md --notes speaker_notes.md
-
-Standard library only. Exit 0 on structural alignment, 1 on failure.
+Projection and speaker notes use plain Markdown H2 headings (no visible IDs).
+For backward compatibility, legacy headings such as '## [P00] Introduction'
+are still accepted. An appendix can start with '## Appendix' or '## 附录'.
 """
 from __future__ import annotations
 
@@ -14,18 +13,48 @@ import re
 import sys
 from pathlib import Path
 
-HEADING = re.compile(r"^\s{0,3}#{1,6}\s+\[(P\d{2,3})\]\s*(.*?)\s*$")
+HEADING = re.compile(r"^\s{0,3}#{2,6}\s+\[(P\d{2,3})\]\s*(.*?)\s*$")
+PLAIN_HEADING = re.compile(r"^\s{0,3}##\s+(?!#)(.+?)\s*$")
+FENCE = re.compile(r"^\s{0,3}(\x60{3,}|~{3,})")
+APPENDIX = re.compile(r"^(?:appendix\b|附录\b|references\b|参考资料\b)", re.I)
 
 
 def headings(path: Path):
+    """Return (internal_id_or_None, visible_title, line_number) for main H2 sections."""
     if not path.exists():
         raise FileNotFoundError(f"Missing {path}")
-    result = []
+    out = []
+    fence_char = None
+    fence_len = 0
+    in_appendix = False
     for number, line in enumerate(path.read_text(encoding="utf-8-sig").splitlines(), 1):
-        match = HEADING.match(line)
-        if match:
-            result.append((match.group(1), match.group(2).strip(), number))
-    return result
+        f = FENCE.match(line)
+        if f:
+            sequence = f.group(1)
+            if fence_char is None:
+                fence_char, fence_len = sequence[0], len(sequence)
+            elif sequence[0] == fence_char and len(sequence) >= fence_len:
+                fence_char, fence_len = None, 0
+            continue
+        if fence_char is not None:
+            continue
+        legacy = HEADING.match(line)
+        if legacy and line.lstrip().startswith("## "):
+            title = legacy.group(2).strip()
+            if APPENDIX.match(title):
+                in_appendix = True
+            elif not in_appendix:
+                out.append((legacy.group(1), title, number))
+            continue
+        plain = PLAIN_HEADING.match(line)
+        if not plain:
+            continue
+        title = plain.group(1).strip()
+        if APPENDIX.match(title):
+            in_appendix = True
+        elif not in_appendix:
+            out.append((None, title, number))
+    return out
 
 
 def check(outline: Path, projection: Path, notes: Path):
@@ -67,26 +96,33 @@ def check(outline: Path, projection: Path, notes: Path):
 
     if len(set(x[0] for x in expected)) != len(expected):
         errors.append("outline contains duplicate section ids")
+    if len(set(x[1] for x in expected)) != len(expected):
+        errors.append("outline contains duplicate section titles; natural titles must be unique")
+
     for label, path in [("projection", projection), ("speaker notes", notes)]:
         actual = headings(path)
-        ids = [x[0] for x in actual]
+        ids = [x[0] for x in actual if x[0] is not None]
         if len(ids) != len(set(ids)):
             errors.append(f"{label}: duplicate section ids")
+        titles = [x[1] for x in actual]
+        if len(titles) != len(set(titles)):
+            errors.append(f"{label}: duplicate section titles")
         if len(actual) != len(expected):
             errors.append(f"{label}: found {len(actual)} sections, expected {len(expected)}")
         for index in range(max(len(expected), len(actual))):
             if index >= len(expected):
-                errors.append(f"{label}: unexpected section {actual[index][0]} at line {actual[index][2]}")
+                errors.append(f"{label}: unexpected section {actual[index][1]!r} at line {actual[index][2]}")
                 continue
             if index >= len(actual):
-                errors.append(f"{label}: missing {expected[index][0]} {expected[index][1]!r}")
+                errors.append(f"{label}: missing {expected[index][1]!r}")
                 continue
             id_found, title_found, line = actual[index]
             id_exp, title_exp = expected[index]
-            if (id_found, title_found) != (id_exp, title_exp):
+            if title_found != title_exp or (id_found is not None and id_found != id_exp):
                 errors.append(
-                    f"{label} line {line}: expected '[{id_exp}] {title_exp}', "
-                    f"found '[{id_found}] {title_found}'"
+                    f"{label} line {line}: expected title {title_exp!r} (internal ID {id_exp}), "
+                    f"found {title_found!r}" +
+                    (f" (legacy ID {id_found})" if id_found else "")
                 )
 
     talk = data.get("talk_minutes")
@@ -106,9 +142,8 @@ def check(outline: Path, projection: Path, notes: Path):
                 errors.append(f"discussion section minutes sum to {discussion_times:g}, but discussion_minutes={discussion:g}")
             if abs(times - duration) > 0.01:
                 errors.append(f"all section minutes sum to {times:g}, but duration_minutes={duration:g}")
-        else:
-            if abs(times - talk) > 0.01:
-                errors.append(f"section minutes sum to {times:g}, but talk_minutes={talk:g}")
+        elif abs(times - talk) > 0.01:
+            errors.append(f"section minutes sum to {times:g}, but talk_minutes={talk:g}")
         if abs((talk + discussion) - duration) > 0.01:
             errors.append(f"talk+discussion={talk + discussion:g}, but duration_minutes={duration:g}")
     return errors
@@ -130,7 +165,7 @@ def main(argv=None):
             print("ERROR:", error, file=sys.stderr)
         print(f"Alignment failed ({len(errors)} issue(s)).", file=sys.stderr)
         return 1
-    print("PASS: projection, speaker notes, and outline have identical section IDs/titles/order and valid time budgets.")
+    print("PASS: projection and speaker notes have matching natural headings/order and valid time budgets.")
     return 0
 
 

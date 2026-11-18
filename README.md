@@ -87,7 +87,9 @@ technical-talk-workflow/
 
 **示例提示词：**
 
-> 用 `technical-talk-workflow` 帮我准备一场 45 分钟的“FSDP 与分布式训练”技术分享。听众理解 PyTorch 和反向传播，但不熟悉分布式训练。请先用一个具体训练任务建立贯穿主线，确定唯一重点推导，再生成共同编号的 `projection.md` 和 `speaker_notes.md`。投屏版不能仅有提纲；讲者稿需要口语过渡、互动和常见追问。最后验证时间、重要公式锚点和图示静态备份，提供缩时方案。
+> 用 `technical-talk-workflow` 帮我准备一场 45 分钟的“FSDP 与分布式训练”技术分享。听众理解 PyTorch 和反向传播，但不熟悉分布式训练。请先用一个具体训练任务建立贯穿主线，确定唯一重点推导，再生成标题一致、**不带章节编号**的 `projection.md` 和 `speaker_notes.md`。投屏版不能仅有提纲；讲者稿需要口语过渡、互动和常见追问。最后验证时间、重要公式锚点和图示静态备份，提供缩时方案。
+
+**默认简洁交付**：除非用户要求详细开发过程，最终优先展示 `projection.md` 与 `speaker_notes.md` 两份文件；内部大纲 ID 用于校验，不出现在标题中。
 
 **新主题一键测试（推荐）**：参照 [验收清单](examples/novel-topic-test/acceptance.md) 直接输入一个陌生技术主题；先看是否正确采用听众和时长默认值，再看同一例子、逐步推导、静态备用及双稿对齐，最后才扩展成长篇。
 
@@ -117,6 +119,7 @@ python scripts/privacy_scan.py .
 
 - Skill 只包含通用方法与匿名示例；**不包含企业内部会议资料、未授权技术图、账号密钥或实际训练日志**。
 - 优先在私有 GitHub 仓库测试，公开前进行人工的版权、隐私和内部信息审查。
+- `v0.3.1`：取消展示稿标题编号，改为内部 ID + 自然标题对齐，保留旧稿兼容。
 - `v0.3.0`：新增分层输入契约、输出跟踪、渐进式示例与同条件策略对照、交互 Storyboard 及新主题测试。已具备结构化自动测试；**尚不保证每个主题的实际演讲效果**。
 - [Agent Skills 标准](https://agentskills.io/specification) · [发布指引](PUBLISH_GITHUB.md) · [版本记录](CHANGELOG.md)
 
@@ -141,7 +144,7 @@ A complete technical outline is not automatically a coherent talk. Speakers may 
 1. **Track one object end to end.** Follow a request, trajectory, tensor, experiment, or user action to keep the entire talk causally connected.
 2. **Bridge familiar concepts to new mechanisms.** Introduce each new idea to solve a concrete problem, then explain its assumptions and failure cases.
 3. **Reuse stable examples.** Start with a tiny worked example, add a small bridging example if needed, and migrate to an end-to-end engineering case. Keep numerical assumptions consistent.
-4. **Keep two documents synchronized.** The projection contains enough technical substance to speak from; the more conversational notes provide explanations, questions, transitions and interruption recovery. Both share one outline and section IDs.
+4. **Keep two documents synchronized.** The projection contains enough technical substance to speak from; the more conversational notes provide explanations, questions, transitions and interruption recovery. Both share one internal outline and identical natural section headings; IDs remain hidden in the outline, never shown in the handouts.
 5. **Budget depth, not just slide count.** Reserve time for the primary derivation, demos, Q&A, and fallback endings when running five or ten minutes late.
 6. **Validate delivery.** Check section IDs, deliberately chosen technical anchors, media manifests, static fallbacks, privacy risks, and the actual rendered artifact.
 
@@ -180,4 +183,4 @@ Run the four Python commands in the Chinese section above. No third-party Python
 
 This repository contains generic workflow instructions and fictitious examples only. Do not commit employer transcripts, nonpublic architecture, sensitive credentials, employee details, proprietary benchmark numbers, or unlicensed illustrations. Prefer a private repository until source permissions and output quality are reviewed.
 
-**Version:** 0.3.0 · MIT License · [Changelog](CHANGELOG.md) · [Publishing guide](PUBLISH_GITHUB.md)
+**Version:** 0.3.1 · MIT License · [Changelog](CHANGELOG.md) · [Publishing guide](PUBLISH_GITHUB.md)

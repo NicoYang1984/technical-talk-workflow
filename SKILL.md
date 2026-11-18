@@ -4,7 +4,7 @@ description: 为技术组会、算法与系统培训、论文或工程分享建�
 license: MIT
 compatibility: Python 3.9+ for optional standard-library validators; otherwise Markdown and JSON only.
 metadata:
-  version: "0.3.0"
+  version: "0.3.1"
   languages: "zh-CN,en"
 ---
 
@@ -16,7 +16,7 @@ metadata:
 
 - **从零准备**：从课程、笔记、项目或论文材料建立可讲的技术故事。
 - **修订现稿**：保留经核实的知识内容，优先解决逻辑断点、信息密度、时间与演示问题；不要无故重写。
-- **双稿对齐**：投屏稿和 Speaker Notes 内容/编号/时间已经漂移时，重新建立唯一章节清单，按它修复双稿。
+- **双稿对齐**：投屏稿和 Speaker Notes 内容/标题/顺序/时间已经漂移时，重新建立唯一章节清单，按它修复双稿；内部 ID 不写在显示标题中。
 - **现场准备或复盘**：生成问答、临场压缩路径、导出检查，或根据实际问答记录复盘。
 - 纯粹概念解释、普通摘要、单篇文字润色不必套用完整工作流。
 
@@ -34,7 +34,7 @@ metadata:
 3. **固定例子、逐步加复杂度**：常用组合是直觉可手算的 A、解释某个特殊机制的微型 B、工程端到端的 C。先让输出能被独立算出，再**一次只引入一个新困难**（如归约、并发、状态、异常形状），维护固定假设；禁止悄悄改变数字、单位、符号。
 4. **少数重要推导、其余概念讲清机制**：选 1–2 个真正必要的深推导；明确前提、每步为什么成立、结果如何回到案例。证明与实现细节可放附录，不要挤掉后段工程和讨论。
 5. **一张总图贯穿 + 可预测的交互**：开场显示全流程，跟踪一个输出/任务，逐步高亮其依赖和状态；每个重要演示按**预测→改变一个条件→逐步观察→解释机制→指出局限**执行。结束重画或用 Bad Case 回到总图。参阅 [机制漫游规范](references/mechanism-walkthrough.md)。
-6. **双轨共用一个 outline**：`outline.json` 是唯一章节/例子/时间契约。投屏稿与讲者稿共享 `[Pxx]` 编号、标题、顺序、核心结论、公式和数字；两稿的*表达密度*可以不同。
+6. **双轨共用一个 outline**：`outline.json` 是唯一章节/例子/时间契约。投屏稿与讲者稿共享**自然章节标题、顺序、核心结论、公式和数字**；稳定节点 ID 仅保存在 `outline.json` 用于机器校验，**不要在任何对外标题或口播稿中显示 `[P00]`、`1.1` 等章节序号**。两稿的*表达密度*可以不同。
 7. **投屏稿自身可讲**：每节至少有问题、可信例子、必要公式或机制、辨析、收束/下一问。不能降为“一个标题 + 三个名词”，也不能整段都是照念稿。
 8. **讲者稿用于训练表达，不是现场拐杖**：提供说人话的解释、动作和图的指向、互动预期与**预期回答/揭晓时机**、常见追问、前后转场、极短压缩版；现场主要依靠投屏稿。
 9. **事实和证据有边界**：定义/定理、假设示例、未经验证推断、真实实测必须分开。既有作者笔记不是自动正确，公开讲义截图不是现场反馈记录。
@@ -46,9 +46,10 @@ metadata:
 
 - `request.json`（可选，用户可用自然语言输入）：用 [输入 Schema](assets/talk-request.schema.json) 明确哪些是用户提供、哪些按默认假设；依 [输入契约](references/input-contract.md) 运行。
 - `brief.md`：受众、目标、时间、媒介、输入来源、公开边界；见 [brief 模板](assets/brief-template.md)。
-- `outline.json`：稳定节点 ID、时长、核心问题、结论、三个层级例子、图示 ID、表达优先级、短版出口；见 [模板](assets/outline-template.json)。
+- `outline.json`：仅内部使用的稳定节点 ID、时长、核心问题、结论、三个层级例子、图示 ID、表达优先级、短版出口；见 [模板](assets/outline-template.json)。
 - `projection.md`：适合显示和直接跟讲的公开版本；见 [模板](assets/projection-template.md)。
-- `speaker_notes.md`：与投屏逐节对齐的口语讲法与临场卡；见 [模板](assets/speaker-notes-template.md)。
+- `speaker_notes.md`：与投屏逐节对齐的口语讲法与临场卡；标题与 Projection 一致、无编号；见 [模板](assets/speaker-notes-template.md)。
+- **最小交付**：用户没有要求辅助文件时，最终只重点提供 `projection.md` 和 `speaker_notes.md`；大纲、简报和校验产物可内部生成，不必全部展示。
 - 需要时：`visuals.json`、`demo_storyboard.json`（[模板](assets/demo-storyboard-template.json)）、`claim-ledger.csv`、`run_of_show.md`、`qa_cards.md`、`demo/`、最终导出的投屏 PDF。
 
 ## 工作流（必须按顺序完成门槛，不应先写大段全文）
@@ -69,7 +70,7 @@ metadata:
 
 ### G3｜先做中密度投屏稿，再做详细讲者稿
 
-按 outline 同步生成两稿：投屏稿的公式、表格、例子和图示足够支撑不看 Notes 的现场解释；讲者稿口语化，包含预测问题、手指/鼠标指向、解释图中对象、正确/错误理解、追问与回到主线。两稿相同节点不能互相矛盾。修改公式或案例时更新两稿与清单；详见 [逐节契约](references/content-contract.md)。
+按 outline 同步生成两稿：**标题不带编号**，使用相同的二级自然章节标题 `## 主题标题`，细分小节使用三级标题；稳定 ID 只在内部 `outline.json`。投屏稿的公式、表格、例子和图示足够支撑不看 Notes 的现场解释；讲者稿口语化，包含预测问题、手指/鼠标指向、解释图中对象、正确/错误理解、追问与回到主线。两稿相同节点不能互相矛盾。修改公式或案例时更新两稿与清单；详见 [逐节契约](references/content-contract.md)。
 
 ### G4｜建立视觉与演示清单
 
@@ -107,7 +108,7 @@ python scripts/audit_talk.py --outline outline.json --projection projection.md -
 ## 本 Skill 的质量门槛
 
 1. **Teachability**：只看投屏稿能独立说出“为何出现→机制→例子→边界→下一问”。
-2. **Alignment**：两稿 `[Pxx]`、重要锚点、数值、例子、图示和章节时间一致。
+2. **Alignment**：两稿自然章节标题、顺序、重要锚点、数值、例子、图示和章节时间一致；内部 ID 仅在大纲中，投屏稿和 Notes 的标题不带编号。
 3. **Truthfulness**：定义有条件，示意有标签，真实结论有来源，开放问题有归宿。
 4. **Runtime**：每个深推导有独立时间，正常版/缩时版都有稳定结尾。
 5. **Display**：实测最终投屏媒介；不把源码块误当 Mermaid/HTML 运行视图。

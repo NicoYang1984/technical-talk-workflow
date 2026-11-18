@@ -1,5 +1,13 @@
 # Changelog
 
+## 0.3.1 — 2026-11-18
+
+- Hide internal section identifiers from projection and speaker-note headings; use shared natural titles and order for structural alignment.
+- Keep legacy `[Pxx]` headings readable by validation scripts for backward compatibility.
+- Simplify final handoff: prioritize two user-facing documents, keeping planning/audit files internal unless requested.
+- Update templates, examples, and regression tests for clean unnumbered headings.
+
+
 ## 0.3.0 — 2026-11-17
 
 - Learned from the public LazyAttention teaching structure: follow one output, add constraints progressively, compare implementations on controlled inputs, separate logical demos from measured execution, and finish with evidence.
